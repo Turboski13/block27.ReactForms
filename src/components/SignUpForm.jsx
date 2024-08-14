@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-export default function SignUpForm() {
+export default function SignUpForm({ setToken }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
@@ -12,6 +12,7 @@ export default function SignUpForm() {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer &{token}`,
               },
               body: JSON.stringify({
                 username: username,
@@ -19,8 +20,8 @@ export default function SignUpForm() {
               }),
             });
       
-            if (response.ok) {
-              const data = await response.json();
+            if (data.token) {
+            setToken(result.token);
               console.log("Signup successful:", data);
              
             } else {
