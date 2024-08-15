@@ -3,10 +3,22 @@ export default function SignUpForm({ setToken }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
-   
+    
+    const validate = (values) => {
+      let errors = {};
+        if (!values.password) {
+        errors.password = 'Password is required';
+      } else if (values.password.length < 5) {
+        errors.password = 'Password needs to be 5 characters or more';
+      }
+    
+      return errors;
+    };
+
     async function handleSubmit(event) {
         event.preventDefault();
-    
+        const errors = validate(formData);
+        setFormErrors(errors);
         try {
             const response = await fetch("https://fsa-jwt-practice.herokuapp.com/signup", {
               method: "POST",
@@ -46,6 +58,7 @@ export default function SignUpForm({ setToken }) {
           Password: 
           <input input value={password} onChange={(e) => setPassword(e.target.value)}/>
         </label>
+        {formErrors.password && <p>{formErrors.password}</p>}
         <button>Submit</button>
       </form>
       </div>);
