@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+
 export default function Authenticate({ token }) {
   const [successMessage, setSuccessMessage] = useState(null);
   const [error, setError] = useState(null);
@@ -17,11 +19,11 @@ export default function Authenticate({ token }) {
       const result = await response.json();
       setSuccessMessage(result.message);
     } catch (error) {
+      console.error("Error during authentication:", error);
       setError(error.message);
     }
   }
-    console.log(handleClick);
-      return ( 
+    return ( 
       <div>
         <h2>Authenticate</h2>
         {successMessage && <p>{successMessage}</p>}

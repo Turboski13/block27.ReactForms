@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+
 export default function SignUpForm({ setToken }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
+    const [formErrors, setFormErrors] = useState({});
     
     const validate = (values) => {
       let errors = {};
@@ -19,6 +21,7 @@ export default function SignUpForm({ setToken }) {
         event.preventDefault();
         const errors = validate(formData);
         setFormErrors(errors);
+
         try {
             const response = await fetch("https://fsa-jwt-practice.herokuapp.com/signup", {
               method: "POST",
@@ -30,6 +33,8 @@ export default function SignUpForm({ setToken }) {
                 username: username,
                 password: password,
               }),
+
+
             });
       
             if (data.token) {
@@ -38,12 +43,10 @@ export default function SignUpForm({ setToken }) {
              
             } else {
               const errorData = await response.json();
-              setError(errorData.message || "An error occurred.");
-              console.error("Signup failed:", errorData);
-            }
-        } catch (error) {
-          setError(error.message);
-        }
+              setError(errorData.message);
+              atch (error); {
+                setError(error.message);
+              }
       }
     return (
         <div>
@@ -54,6 +57,7 @@ export default function SignUpForm({ setToken }) {
           Username: 
           <input input value={username} onChange={(e) => setUsername(e.target.value)}/>
         </label>
+        {formErrors.username && <p>{formErrors.username}</p>}
         <label>
           Password: 
           <input input value={password} onChange={(e) => setPassword(e.target.value)}/>
@@ -62,4 +66,4 @@ export default function SignUpForm({ setToken }) {
         <button>Submit</button>
       </form>
       </div>);
-}
+} 
