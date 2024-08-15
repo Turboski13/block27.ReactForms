@@ -19,8 +19,8 @@ export default function SignUpForm({ setToken }) {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        const errors = validate(formData);
-        setFormErrors(errors);
+        /* const errors = validate(formData); */
+       /*  setFormErrors(errors); */
 
         try {
             const response = await fetch("https://fsa-jwt-practice.herokuapp.com/signup", {
@@ -33,8 +33,6 @@ export default function SignUpForm({ setToken }) {
                 username: username,
                 password: password,
               }),
-
-
             });
       
             if (data.token) {
@@ -44,9 +42,10 @@ export default function SignUpForm({ setToken }) {
             } else {
               const errorData = await response.json();
               setError(errorData.message);
-              atch (error); {
+            }}
+              catch (error) {
                 setError(error.message);
-              }
+            } 
       }
     return (
         <div>
